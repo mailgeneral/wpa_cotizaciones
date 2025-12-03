@@ -18,7 +18,7 @@ const state = {
     phone: "2228 49 69 95"
   },
   client: {
-    name: "Validado por Marketing y Ventas",
+    name: "CLIENTE EXCLUSIVO MARKETING",
     phone: ""
   },
   view: "catalog" 
