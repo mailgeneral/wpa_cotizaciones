@@ -1,0 +1,1 @@
+// Este archivo ya no se utiliza. La lógica se ha migrado a index.js y HTML puro.

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Cotizador Madre Noche</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    
+    <div class="container pb-20">
+      
+      <!-- SECCIÓN DE CONFIGURACIÓN (Vendedor y Cliente) -->
+      <div class="card no-print" id="config-card">
+        <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+          <span class="text-accent">◈</span> Datos de Operación
+        </h2>
+        
+        <!-- CONTROL TÁCTICO DE PRECIOS -->
+        <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-800 p-3 rounded border border-slate-600">
+           <div>
+             <label class="text-xs text-accent uppercase font-bold mb-1 block">Contexto (Etiqueta)</label>
+             <select id="promo-label-selector" class="w-full font-bold">
+               <!-- Se llena dinámicamente -->
+             </select>
+           </div>
+           <div>
+             <label class="text-xs text-success uppercase font-bold mb-1 block">Descuento Real (%)</label>
+             <select id="percentage-selector" class="w-full font-bold font-mono">
+               <!-- Se llena dinámicamente -->
+             </select>
+           </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Datos Vendedor -->
+          <div>
+             <label class="text-xs text-secondary uppercase font-bold">Vendedor (Tú)</label>
+             <input type="text" id="vendor-company" placeholder="Tu Empresa" value="IMPERDELLANTA">
+             <div class="flex gap-2">
+               <input type="text" id="vendor-name" placeholder="Tu Nombre" value="PEDRO - Gerente de Marketing y Ventas">
+               <input type="tel" id="vendor-phone" placeholder="Tu Teléfono" value="2228 49 69 95">
+             </div>
+          </div>
+          <!-- Datos Cliente -->
+          <div>
+            <label class="text-xs text-secondary uppercase font-bold">Cliente (Objetivo)</label>
+            <input type="text" id="client-name" placeholder="Nombre del Cliente" value="Validado por Marketing y Ventas">
+            <input type="tel" id="client-phone" placeholder="WhatsApp Cliente (52...)">
+          </div>
+        </div>
+      </div>
+
+      <!-- NAVEGACIÓN -->
+      <div class="flex gap-2 mb-6 no-print sticky top-0 bg-slate-900/90 backdrop-blur z-10 py-2">
+        <button id="tab-catalog" class="flex-1 py-2 rounded font-bold bg-accent text-black transition-colors">
+          CATÁLOGO
+        </button>
+        <button id="tab-quote" class="flex-1 py-2 rounded font-bold bg-slate-800 text-gray-400 transition-colors flex justify-center gap-2">
+          COTIZACIÓN 
+          <span id="cart-badge" class="bg-white text-black px-2 rounded-full text-xs flex items-center hidden">0</span>
+        </button>
+      </div>
+
+      <!-- VISTA CATÁLOGO -->
+      <div id="view-catalog" class="product-grid animate-fade-in">
+        <!-- Los productos se inyectan aquí con JS -->
+      </div>
+
+      <!-- VISTA COTIZACIÓN -->
+      <div id="view-quote" class="hidden">
+        <div class="card" id="quote-card">
+          
+          <!-- Encabezado de Factura -->
+          <div class="invoice-header flex justify-between items-start mb-8">
+            <div>
+              <h1 class="text-2xl font-bold uppercase tracking-wider mb-2 print:text-accent" id="print-company">EMPRESA</h1>
+              <p class="text-sm text-secondary print:text-slate-600 mb-2">25 poniente 1902 | 72410 Los Volcanes | Puebla, Pue</p>
+              <div class="text-sm text-secondary print:text-slate-600 space-y-1">
+                <p>Atención: <span id="print-vendor-name">Nombre</span></p>
+                <p>
+                    <a id="header-phone-link" href="#" class="flex items-center gap-1 hover:text-accent no-underline">
+                        📞 <span id="print-vendor-phone">Teléfono</span>
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.imperdellanta.com" target="_blank" class="hover:text-accent no-underline">
+                        🌐 www.imperdellanta.com
+                    </a>
+                </p>
+                <p>Fecha: <span id="print-date"></span></p>
+              </div>
+            </div>
+            <div class="text-right">
+              <h2 class="text-xl font-bold text-accent print:text-slate-800">PRESUPUESTO</h2>
+              <div class="text-sm text-secondary print:text-slate-600 mt-2">
+                <p>Cliente: <span id="print-client-name" class="font-bold">...</span></p>
+                <p>Tel: <span id="print-client-phone">...</span></p>
+                <div class="mt-2 text-xs uppercase border border-gray-400 p-1 inline-block rounded text-right print:border-accent">
+                  <span id="print-label-text" class="block font-bold">Tarifa</span>
+                  <span id="print-discount-val" class="block text-gray-500">Neto</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabla de Carrito -->
+          <div id="empty-cart-msg" class="text-center py-8 text-secondary hidden">
+            No hay items en la cotización. Agrega productos del catálogo.
+          </div>
+
+          <table class="cart-table mb-2" id="cart-table">
+            <thead>
+              <tr>
+                <th class="print:text-slate-500">Producto</th>
+                <th class="text-right print:text-slate-500">Cant</th>
+                <th class="text-right print:text-slate-500">Unitario</th>
+                <th class="text-right print:text-slate-500">Total</th>
+                <th class="w-8 no-print"></th>
+              </tr>
+            </thead>
+            <tbody id="cart-body">
+              <!-- Items del carrito aquí -->
+            </tbody>
+            <tfoot>
+              <tr class="border-t-2 border-slate-600 print:border-accent">
+                <td colspan="2" class="pt-4 text-right font-bold print:text-slate-700">TOTAL NETO</td>
+                <td colspan="2" class="pt-4 text-right font-bold text-xl text-accent print:text-accent" id="total-amount">
+                  $0.00
+                </td>
+                <td class="no-print"></td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <!-- ZONA CALIENTE: ACCIONES RÁPIDAS (Links Texto) -->
+          <!-- IMPORTANTE: Se eliminó la clase 'no-print' para que aparezcan en el PDF -->
+          <div id="quick-contact-container" class="quick-contact-row hidden">
+             <a href="#" id="quick-call-btn" class="btn-contact">
+                📞 Llamar al Vendedor
+             </a>
+             <a href="#" id="quick-wa-btn" class="btn-contact">
+                💬 WhatsApp Vendedor
+             </a>
+          </div>
+
+          <!-- SECCIÓN TÁCTICA: Beneficios y Links de Texto -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 print:gap-4 pt-4 border-t border-slate-700 print:border-accent">
+            <!-- Beneficios (Izquierda) -->
+            <div>
+              <h3 class="text-sm uppercase font-bold text-accent print:text-slate-800 mb-4">Por qué elegirnos</h3>
+              <ul id="benefits-list" class="text-xs text-secondary print:text-slate-600 space-y-2 pl-0 list-none">
+                <!-- Inyectado por JS -->
+              </ul>
+            </div>
+            
+            <!-- Recursos Digitales (Derecha - Solo texto) -->
+            <div class="text-left md:text-right print:text-right">
+              <h3 class="text-sm uppercase font-bold text-accent print:text-slate-800 mb-4">Recursos (Clic para abrir)</h3>
+              <div id="links-container" class="flex flex-col items-start md:items-end print:items-end">
+                  <!-- Links Inyectados por JS -->
+              </div>
+            </div>
+          </div>
+          
+          <!-- QR CENTRADO (Fila Exclusiva) -->
+          <div class="flex justify-center mt-6 mb-4 qr-center-print">
+             <div class="bg-white p-2 rounded border border-gray-600 print:border-none">
+               <img src="qr-code.png" alt="Escanea para más info" class="w-24 h-24 object-contain">
+             </div>
+          </div>
+
+          <!-- Disclaimer / Legales -->
+          <div class="pt-4 border-t border-gray-800 print:border-slate-300 text-[10px] text-center text-secondary print:text-slate-500">
+            <p>Válido por 15 días naturales o hasta agotar existencias. Precios sujetos a cambio sin previo aviso.</p>
+            <a href="https://www.imperdellanta.com" class="block mt-2 font-bold no-underline text-accent print:text-accent">www.imperdellanta.com</a>
+          </div>
+
+          <!-- CTA DISTRIBUIDOR -->
+          <div class="mt-4 print:mt-8 print:border-t print:border-slate-200 print:pt-4">
+            <a href="#" id="btn-distributor-cta" class="btn-distributor">
+               🤝 Quiero ser distribuidor
+            </a>
+          </div>
+
+          <!-- Acciones Principales -->
+          <div class="no-print flex flex-col gap-3 mt-8 pt-8 border-t border-slate-700">
+            <button id="btn-print" class="btn-primary bg-white text-black hover:bg-gray-200">
+              📄 Descargar PDF / Imprimir
+            </button>
+            <button id="btn-whatsapp" class="btn-secondary flex items-center justify-center gap-2">
+              <span>💬</span> Enviar Cotización por WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- TEMPLATES (Plantillas ocultas para JS) -->
+    <template id="tpl-product">
+      <div class="card flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-start">
+            <span class="sku text-xs text-secondary font-mono mb-2 block"></span>
+            <span class="badge hidden"></span>
+          </div>
+          <h3 class="name text-lg mb-2"></h3>
+          <p class="desc text-sm text-secondary mb-4"></p>
+        </div>
+        <div class="mt-auto">
+          <div class="flex items-end gap-2 mb-4">
+            <span class="price price-tag"></span>
+            <span class="old-price price-strike hidden"></span>
+          </div>
+          <div class="actions">
+            <button class="btn-add btn-primary">Agregar</button>
+            <div class="qty-control flex items-center justify-between bg-black/20 rounded p-1 hidden">
+              <button class="btn-minus btn-icon text-xl">-</button>
+              <span class="qty-display font-bold text-white">1</span>
+              <button class="btn-plus btn-icon text-xl">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="tpl-cart-row">
+      <tr>
+        <td>
+          <div class="row-name font-bold text-sm print:text-slate-800"></div>
+          <div class="row-sku text-xs text-secondary font-mono print:text-slate-500"></div>
+        </td>
+        <td class="row-qty text-right font-mono print:text-slate-800"></td>
+        <td class="row-price text-right font-mono print:text-slate-800"></td>
+        <td class="row-total text-right font-mono font-bold text-white print:text-slate-800"></td>
+        <td class="text-right no-print">
+          <button class="btn-remove text-danger hover:text-white transition-colors">✕</button>
+        </td>
+      </tr>
+    </template>
+
+    <script type="module" src="index.js"></script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

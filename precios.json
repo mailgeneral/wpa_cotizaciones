@@ -1,0 +1,78 @@
+{
+  "version": "3.5.1",
+  "moneda": "MXN",
+  "configuracion_precios": {
+    "etiquetas_estrategia": [
+      "Precio de Lista (Estándar)",
+      "🔥 PROMO DEL MES",
+      "Cliente Frecuente",
+      "Aplicador Certificado",
+      "Cliente PREMIUM",
+      "⚠️ Autorizado Marketing y Ventas",
+      "Mayoreo especial"
+    ],
+    "niveles_descuento": [0, 5, 10, 15, 20, 25, 28, 30],
+    "beneficios_tacticos": [
+      "🏭 Productos directos de fábrica",
+      "🛡️ Innovación y calidad comprobada",
+      "♻️ Tecnología ecológica de llanta y fibra celulosa",
+      "⚡ Entrega inmediata y stock disponible"
+    ],
+    "recursos_digitales": [
+      { "texto": "Fichas Técnicas", "url": "https://drino.short.gy/FICHAS" },
+      { "texto": "Manuales de Aplicación", "url": "https://drino.short.gy/MANUALES" },
+      { "texto": "Conoce nuestras Obras", "url": "https://drino.short.gy/OBRAS" },
+      { "texto": "Ubicación GPS", "url": "https://drino.short.gy/UBICACION" }
+    ]
+  },
+  "productos": [
+    {
+      "sku": "IDL12-19L",
+      "nombre_producto": "IMPERDELLANTA 12 (Cubeta 19L)",
+      "precio_lista": 899,
+      "descripcion": "Impermeabilizante fibratado con llanta reciclada. Duración 12 años."
+    },
+    {
+      "sku": "IDL7-19L",
+      "nombre_producto": "IMPERDELLANTA 7 (Cubeta 19L)",
+      "precio_lista": 799,
+      "descripcion": "Impermeabilizante fibratado con llanta reciclada. Duración 7 años."
+    },
+    {
+      "sku": "SELLA-1L",
+      "nombre_producto": "SELLADOR SELLAPLUS EX (Garrafa 1L)",
+      "precio_lista": 199,
+      "descripcion": "Sellador acrílico concentrado para mejorar adherencia y durabiliad."
+    },
+    {
+      "sku": "RESAN-1L",
+      "nombre_producto": "RESANADOR RS-MAX (Envase 1L)",
+      "precio_lista": 199,
+      "descripcion": "Pasta resanadora especial para grietas, fisuras y detener goteras."
+    },
+    {
+      "sku": "PINLIDER-19L",
+      "nombre_producto": "PINTURA LIDERPINT Blanca (Cubeta 19L)",
+      "precio_lista": 750,
+      "descripcion": "Pintura vinil-acrílica acabado mate color Blanco. Interiores y exteriores."
+    },
+    {
+      "sku": "PINLIDER-COL-19L",
+      "nombre_producto": "PINTURA LIDERPINT Color (Cubeta 19L)",
+      "precio_lista": 833,
+      "descripcion": "Pintura vinil-acrílica acabado mate colores varios. Interiores y exteriores."
+    },
+    {
+      "sku": "PINOLY-19L",
+      "nombre_producto": "PINTURA OLYMPUS 300 Blanca (Cubeta 19L)",
+      "precio_lista": 1780,
+      "descripcion": "Pintura de alto desempeño lavable color Blanco. Calidad Premium."
+    },
+    {
+      "sku": "MALLA-FV-50",
+      "nombre_producto": "Malla de fibra de vidrio adherible (50x1 metro)",
+      "precio_lista": 1150,
+      "descripcion": "Rollo de refuerzo estructural autoadherible para sistemas de impermeabilización."
+    }
+  ]
+}
