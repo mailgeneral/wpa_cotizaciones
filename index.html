@@ -3,7 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="description" content="Cotizador Táctico Imperdellanta">
     <title>Cotizador Madre Noche</title>
+    
+    <!-- PWA MANIFEST -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -13,6 +20,13 @@
   <body>
     
     <div class="container pb-20">
+      
+      <!-- PWA INSTALL BUTTON (Oculto por defecto) -->
+      <div id="install-container" class="hidden mb-4 no-print">
+        <button id="btn-install" class="w-full bg-slate-800 text-accent border border-accent py-3 font-bold uppercase tracking-wider hover:bg-slate-700 transition-all flex items-center justify-center gap-2 shadow-[0_0_10px_rgba(57,255,20,0.2)]">
+          <span>📲</span> Instalar App en Dispositivo
+        </button>
+      </div>
       
       <!-- SECCIÓN DE CONFIGURACIÓN (Vendedor y Cliente) -->
       <div class="card no-print" id="config-card">

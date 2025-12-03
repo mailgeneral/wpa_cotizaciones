@@ -47,6 +47,10 @@ const refs = {
   headerPhoneLink: document.getElementById('header-phone-link'),
   distributorBtn: document.getElementById('btn-distributor-cta'),
   
+  // Install App
+  installContainer: document.getElementById('install-container'),
+  btnInstall: document.getElementById('btn-install'),
+  
   // Selectors
   labelSelector: document.getElementById('promo-label-selector'),
   percentSelector: document.getElementById('percentage-selector'),
@@ -419,6 +423,41 @@ function handleWhatsApp() {
   const clean = cleanPhone(state.client.phone);
   const url = `https://wa.me/${clean}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
+}
+
+// --- PWA LOGIC (INSTALLER) ---
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Previene que Chrome muestre el prompt nativo inmediatamente
+  e.preventDefault();
+  deferredPrompt = e;
+  // Muestra nuestro botón personalizado
+  refs.installContainer.classList.remove('hidden');
+});
+
+refs.btnInstall.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
+    deferredPrompt = null;
+    refs.installContainer.classList.add('hidden');
+  }
+});
+
+window.addEventListener('appinstalled', () => {
+  refs.installContainer.classList.add('hidden');
+  console.log('PWA was installed');
+});
+
+// --- Service Worker Register ---
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW registrado:', reg))
+      .catch(err => console.log('SW falló:', err));
+  });
 }
 
 init();
